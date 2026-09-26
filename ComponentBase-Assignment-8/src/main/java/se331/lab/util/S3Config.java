@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Configuration;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.S3Configuration;
+import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 
 import java.net.URI;
 
@@ -39,12 +41,15 @@ public class S3Config {
     }
 
     @Bean
-    public software.amazon.awssdk.services.s3.presigner.S3Presigner getS3Presigner() {
+    public S3Presigner getS3Presigner() {
         AwsBasicCredentials credentials = AwsBasicCredentials.create(accessKeyId, secretAccessKey);
-        return software.amazon.awssdk.services.s3.presigner.S3Presigner.builder()
+        return S3Presigner.builder()
                 .credentialsProvider(() -> credentials)
                 .region(Region.of(region))
                 .endpointOverride(URI.create(endpoint))
+                .serviceConfiguration(S3Configuration.builder()
+                        .pathStyleAccessEnabled(true) // บังคับให้ใช้ Path Style เหมือนกับ S3Client
+                        .build())
                 .build();
     }
 }
