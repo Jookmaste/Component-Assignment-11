@@ -37,4 +37,14 @@ public class S3Config {
                 .forcePathStyle(true)
                 .build();
     }
+
+    @Bean
+    public software.amazon.awssdk.services.s3.presigner.S3Presigner getS3Presigner() {
+        AwsBasicCredentials credentials = AwsBasicCredentials.create(accessKeyId, secretAccessKey);
+        return software.amazon.awssdk.services.s3.presigner.S3Presigner.builder()
+                .credentialsProvider(() -> credentials)
+                .region(Region.of(region))
+                .endpointOverride(URI.create(endpoint))
+                .build();
+    }
 }
