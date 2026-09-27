@@ -9,4 +9,5 @@ public interface OrganizerService {
     List<Organizer> getAllOrganizer();
     public Page<Organizer> getOrganizers(Integer perPage, Integer page);
     Organizer save(Organizer organizer);
+    Organizer getOrganizer(Long id);
 }

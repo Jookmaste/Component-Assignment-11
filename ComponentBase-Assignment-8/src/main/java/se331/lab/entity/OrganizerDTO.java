@@ -18,4 +18,5 @@ public class OrganizerDTO {
     String address;
     @Builder.Default
     List<OrganizerOwnEventsDTO> ownEvents = new ArrayList<>();
+    List<String> images;
 }

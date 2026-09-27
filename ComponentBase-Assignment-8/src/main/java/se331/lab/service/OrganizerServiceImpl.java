@@ -30,4 +30,9 @@ public class OrganizerServiceImpl implements OrganizerService {
         organizer.setId(null);
         return organizerDao.save(organizer);
     }
+
+    @Override
+    public Organizer getOrganizer(Long id) {
+        return organizerDao.getOrganizer(id);
+    }
 }
